@@ -1,0 +1,32 @@
+name: firts task
+
+on:
+  push:
+    branches: [main]
+    paths:
+    - 'app.py'
+#on: workflow_dispatch
+
+jobs:
+  check-python-version:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check Python version
+      - run: python --version
+    
+  test-with-pylint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: check the code
+        uses: actions/checkout@v2
+      - name: set up Python 3.11
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.11'
+      - name: install requirements
+        run: pip install -r requirements.txt
+      - name: install Pylint
+        run: pip install pylint
+      - name: run app.py with pylint
+        run: pylint app.py
+        
